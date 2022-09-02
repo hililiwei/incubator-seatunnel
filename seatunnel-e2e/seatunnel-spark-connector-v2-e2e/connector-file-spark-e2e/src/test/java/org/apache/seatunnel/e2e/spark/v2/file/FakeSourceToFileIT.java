@@ -41,6 +41,15 @@ public class FakeSourceToFileIT extends SparkContainer {
     }
 
     /**
+     *  fake source -> local text file sink
+     */
+    @Test
+    public void testFakeSourceToLocalFileTextRename() throws IOException, InterruptedException {
+        Container.ExecResult execResult = executeSeaTunnelSparkJob("/file/fakesource_to_local_text_rename.conf");
+        Assertions.assertEquals(0, execResult.getExitCode());
+    }
+
+    /**
      *  fake source -> local parquet file sink
      */
     @Test
