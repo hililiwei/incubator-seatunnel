@@ -49,10 +49,10 @@ import java.util.Map;
 import java.util.Properties;
 
 @AutoService(BaseFlinkSource.class)
-public class KafkaTableStream implements FlinkStreamSource {
+public class KafkaStream implements FlinkStreamSource {
 
     private static final long serialVersionUID = 5287018194573371428L;
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaTableStream.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaStream.class);
 
     private Config config;
 
@@ -116,7 +116,7 @@ public class KafkaTableStream implements FlinkStreamSource {
 
     @Override
     public String getPluginName() {
-        return "KafkaTableStream";
+        return "KafkaStream";
     }
 
     @Override

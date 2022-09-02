@@ -162,7 +162,7 @@ public class JdbcSource implements FlinkBatchSource {
 
     @Override
     public String getPluginName() {
-        return "JdbcSource";
+        return "Jdbc";
     }
 
     private JdbcParameterValuesProvider initPartition(String columnName, Connection connection, String query) throws SQLException {

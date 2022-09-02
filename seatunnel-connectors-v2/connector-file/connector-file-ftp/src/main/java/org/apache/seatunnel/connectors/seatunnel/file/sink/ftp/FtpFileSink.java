@@ -47,17 +47,29 @@ public class FtpFileSink extends AbstractFileSink {
     @Override
     public void prepare(Config pluginConfig) throws PrepareFailException {
         super.prepare(pluginConfig);
-        CheckResult result = CheckConfigUtil.checkAllExists(pluginConfig,
-                FtpConfig.FTP_HOST, FtpConfig.FTP_PORT, FtpConfig.FTP_USERNAME, FtpConfig.FTP_PASSWORD);
-        if (!result.isSuccess()) {
-            throw new PrepareFailException(getPluginName(), PluginType.SINK, result.getMsg());
-        } else {
-            this.ftpHost = pluginConfig.getString(FtpConfig.FTP_HOST);
-            this.ftpPort = pluginConfig.getInt(FtpConfig.FTP_PORT);
-            this.ftpUserName = pluginConfig.getString(FtpConfig.FTP_USERNAME);
-            this.ftpPwd = pluginConfig.getString(FtpConfig.FTP_PASSWORD);
-            FtpFileUtils.initFTPClient(this.ftpHost, this.ftpPort, this.ftpUserName, this.ftpPwd);
 
+        CheckResult result = CheckConfigUtil.checkAllExists(pluginConfig,
+            FtpConfig.HOST, FtpConfig.PORT, FtpConfig.USERNAME, FtpConfig.PASSWORD);
+
+        if (result.isSuccess()) {
+            this.ftpHost = pluginConfig.getString(FtpConfig.HOST);
+            this.ftpPort = pluginConfig.getInt(FtpConfig.PORT);
+            this.ftpUserName = pluginConfig.getString(FtpConfig.USERNAME);
+            this.ftpPwd = pluginConfig.getString(FtpConfig.PASSWORD);
+            FtpFileUtils.initFTPClient(this.ftpHost, this.ftpPort, this.ftpUserName, this.ftpPwd);
+        } else {
+            result = CheckConfigUtil.checkAllExists(pluginConfig,
+                FtpConfig.FTP_HOST, FtpConfig.FTP_PORT, FtpConfig.FTP_USERNAME, FtpConfig.FTP_PASSWORD);
+
+            if (!result.isSuccess()) {
+                throw new PrepareFailException(getPluginName(), PluginType.SINK, result.getMsg());
+            } else {
+                this.ftpHost = pluginConfig.getString(FtpConfig.FTP_HOST);
+                this.ftpPort = pluginConfig.getInt(FtpConfig.FTP_PORT);
+                this.ftpUserName = pluginConfig.getString(FtpConfig.FTP_USERNAME);
+                this.ftpPwd = pluginConfig.getString(FtpConfig.FTP_PASSWORD);
+                FtpFileUtils.initFTPClient(this.ftpHost, this.ftpPort, this.ftpUserName, this.ftpPwd);
+            }
         }
     }
 }

@@ -42,7 +42,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 @AutoService(BaseFlinkSink.class)
-public class DorisSink implements FlinkStreamSink, FlinkBatchSink {
+public class Doris implements FlinkStreamSink, FlinkBatchSink {
 
     private static final long serialVersionUID = 4747849769146047770L;
     private static final int DEFAULT_BATCH_SIZE = 5000;
@@ -101,7 +101,7 @@ public class DorisSink implements FlinkStreamSink, FlinkBatchSink {
 
     @Override
     public String getPluginName() {
-        return "DorisSink";
+        return "Doris";
     }
 
     @Override

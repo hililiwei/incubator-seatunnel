@@ -161,6 +161,6 @@ public class FileSink implements FlinkStreamSink, FlinkBatchSink {
 
     @Override
     public String getPluginName() {
-        return "FileSink";
+        return "File";
     }
 }

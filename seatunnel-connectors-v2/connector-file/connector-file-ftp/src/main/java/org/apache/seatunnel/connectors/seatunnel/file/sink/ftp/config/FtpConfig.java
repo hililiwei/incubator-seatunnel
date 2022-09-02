@@ -18,8 +18,17 @@
 package org.apache.seatunnel.connectors.seatunnel.file.sink.ftp.config;
 
 public class FtpConfig {
+    @Deprecated
     public static final String FTP_PASSWORD = "ftp_password";
+    @Deprecated
     public static final String FTP_USERNAME = "ftp_username";
+    @Deprecated
     public static final String FTP_HOST = "ftp_host";
+    @Deprecated
     public static final String FTP_PORT = "ftp_port";
+
+    public static final String PASSWORD = "password";
+    public static final String USERNAME = "username";
+    public static final String HOST = "host";
+    public static final String PORT = "port";
 }

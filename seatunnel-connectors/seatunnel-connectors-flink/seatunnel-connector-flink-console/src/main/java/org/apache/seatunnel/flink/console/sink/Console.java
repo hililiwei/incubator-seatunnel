@@ -35,9 +35,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @AutoService(BaseFlinkSink.class)
-public class ConsoleSink extends RichOutputFormat<Row> implements FlinkBatchSink, FlinkStreamSink {
+public class Console extends RichOutputFormat<Row> implements FlinkBatchSink, FlinkStreamSink {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleSink.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Console.class);
     private static final String LIMIT = "limit";
     private Integer limit = Integer.MAX_VALUE;
 
@@ -97,7 +97,7 @@ public class ConsoleSink extends RichOutputFormat<Row> implements FlinkBatchSink
 
     @Override
     public String getPluginName() {
-        return "ConsoleSink";
+        return "Console";
     }
 
 }

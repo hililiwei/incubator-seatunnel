@@ -22,7 +22,7 @@ import org.apache.spark.sql.catalyst.encoders.RowEncoder
 import org.apache.spark.sql.types.{DataTypes, StructType}
 import org.apache.spark.sql.{Dataset, Row, RowFactory}
 
-class Fake extends SparkBatchSource {
+class FakeSource extends SparkBatchSource {
 
   override def getData(env: SparkEnvironment): Dataset[Row] = {
 
@@ -37,5 +37,5 @@ class Fake extends SparkBatchSource {
     env.getSparkSession.createDataset(s)(RowEncoder(schema))
   }
 
-  override def getPluginName: String = "Fake"
+  override def getPluginName: String = "FakeSource"
 }

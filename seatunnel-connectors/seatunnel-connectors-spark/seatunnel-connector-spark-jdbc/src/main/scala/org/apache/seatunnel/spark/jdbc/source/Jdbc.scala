@@ -16,12 +16,14 @@
  */
 package org.apache.seatunnel.spark.jdbc.source
 
+import org.apache.commons.lang3.StringUtils
 import scala.collection.JavaConversions._
 import scala.util.{Failure, Success, Try}
 import org.apache.seatunnel.common.config.{CheckResult, TypesafeConfigUtils}
 import org.apache.seatunnel.common.config.CheckConfigUtil.checkAllExists
 import org.apache.seatunnel.spark.SparkEnvironment
 import org.apache.seatunnel.spark.batch.SparkBatchSource
+import org.apache.seatunnel.spark.jdbc.Config
 import org.apache.seatunnel.spark.jdbc.source.util.HiveDialect
 import org.apache.spark.sql.jdbc.JdbcDialects
 import org.apache.spark.sql.{DataFrameReader, Dataset, Row, SparkSession}
@@ -33,17 +35,27 @@ class Jdbc extends SparkBatchSource {
   }
 
   override def checkConfig(): CheckResult = {
-    checkAllExists(config, "url", "table", "user", "password")
+    val checkResult =
+      checkAllExists(config, Config.URL, Config.TABLE, Config.USERNAME, Config.PASSWORD)
+    if (!checkResult.isSuccess) {
+      val checkResult2 = checkAllExists(config, Config.URL, Config.TABLE, Config.USE, Config.PASSWORD)
+      if(!checkResult2.isSuccess) {
+        return checkResult
+      }
+      return checkResult2
+    }
+    checkResult
   }
 
   def jdbcReader(sparkSession: SparkSession, driver: String): DataFrameReader = {
+    val user = if (StringUtils.isBlank(config.getString(Config.USERNAME))) config.getString(Config.USE) else config.getString(Config.USERNAME)
 
     val reader = sparkSession.read
       .format("jdbc")
-      .option("url", config.getString("url"))
-      .option("dbtable", config.getString("table"))
-      .option("user", config.getString("user"))
-      .option("password", config.getString("password"))
+      .option("url", config.getString(Config.URL))
+      .option("dbTable", config.getString(Config.TABLE))
+      .option("user", user)
+      .option("password", config.getString(Config.PASSWORD))
       .option("driver", driver)
 
     Try(TypesafeConfigUtils.extractSubConfigThrowable(config, "jdbc.", false)) match {

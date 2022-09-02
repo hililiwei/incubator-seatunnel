@@ -129,7 +129,7 @@ public class JdbcSink implements FlinkStreamSink, FlinkBatchSink {
 
     @Override
     public String getPluginName() {
-        return "JdbcSink";
+        return "Jdbc";
     }
 
     @Override
